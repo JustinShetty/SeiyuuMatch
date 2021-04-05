@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Search from './search';
 import Characters from './characters';
 import MatchList from './matchlist';
@@ -98,4 +99,7 @@ class Main extends React.Component {
     }
 }
 
-export default Main;
+ReactDOM.render(
+    <Main />,
+    document.getElementById('reactMain'),
+);
