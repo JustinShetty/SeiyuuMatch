@@ -47,7 +47,7 @@ class Characters extends React.Component {
                         <td><img src={result.image_url} width='100em'/></td>
                         <td>{result.name}</td>
                         <td>
-                            <button onClick={() => this.props.vaSelectCallback(result.voice_actors[0].mal_id, result.voice_actors[0].name)}>
+                            <button onClick={() => this.props.characterSelectCallback(result)}>
                                 {result.voice_actors[0].name}
                             </button>
                         </td>
@@ -63,7 +63,7 @@ class Characters extends React.Component {
 
 Characters.propTypes = {
     showId: PropTypes.number.isRequired,
-    vaSelectCallback: PropTypes.func.isRequired,
+    characterSelectCallback: PropTypes.func.isRequired,
 };
 
 export default Characters;

@@ -8,11 +8,8 @@ const defaultUsername = '401_k';
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {malUsername: defaultUsername, showId: null, vaId: null, vaName: null};
-        this.searchSelectCallback = this.searchSelectCallback.bind(this);
-        this.vaSelectCallback = this.vaSelectCallback.bind(this);
+        this.state = {malUsername: defaultUsername, show: null, character: null};
         this.usernameFieldChangeHandler = this.usernameFieldChangeHandler.bind(this);
-
         this.usernameField = React.createRef();
     }
 
@@ -23,28 +20,30 @@ class Main extends React.Component {
     usernameFieldChangeHandler(e) {
         this.setState({
             malUsername: e.target.value,
-            showId: null,
-            vaId: null,
-            vaName: null,
-        });
-    }
-
-    searchSelectCallback(id) {
-        this.setState({
-            showId: id,
-            vaId: null,
-            vaName: null,
-        });
-    }
-
-    vaSelectCallback(id, name) {
-        this.setState({
-            vaId: id,
-            vaName: name,
+            show: null,
+            character: null,
         });
     }
 
     render() {
+        let selectionInfo = (
+            <div className='row'>
+                {this.state.show ?
+                <div className='col'>
+                    <img src={this.state.show.image_url}/>
+                    <div>{this.state.show.title}</div>
+                </div>:
+                <div/>
+                }
+                {this.state.character ?
+                <div className='col'>
+                    <img src={this.state.character.image_url}/>
+                    <div>{this.state.character.name}</div>
+                </div>:
+                <div/>
+                }
+            </div>
+        );
         return (
             <div>
                 <input
@@ -55,27 +54,42 @@ class Main extends React.Component {
                     defaultValue={defaultUsername}/>
                 {
                     this.state.malUsername !== null && this.state.malUsername !== '' ?
-                    <Search showSelectCallback={this.searchSelectCallback}/> :
-                    <div/>
-                }
-                {
-                    this.state.showId && !this.state.vaId ?
-                    <div>
-                        <hr/>
-                        <Characters
-                            showId={this.state.showId}
-                            vaSelectCallback={this.vaSelectCallback}/>
+                    <div className='row'>
+                        <div className='col'>
+                            <Search showSelectCallback={(show) => {
+                                this.setState({
+                                    show: show,
+                                    character: null,
+                                });
+                            }}/>
+                        </div>
+                        <div className='col'>
+                            {selectionInfo}
+                        </div>
                     </div> :
                     <div/>
                 }
                 {
-                    this.state.vaId ?
+                    this.state.show && !this.state.character ?
+                    <div>
+                        <hr/>
+                        <Characters
+                            showId={this.state.show.mal_id}
+                            characterSelectCallback={(character) => {
+                                this.setState({
+                                    character: character,
+                                });
+                            }}/>
+                    </div> :
+                    <div/>
+                }
+                {
+                    this.state.character ?
                     <div>
                         <hr/>
                         <MatchList
                             username={this.state.malUsername}
-                            vaId={this.state.vaId}
-                            vaName={this.state.vaName}/>
+                            va={this.state.character.voice_actors[0]}/>
                     </div> :
                     <div/>
                 }

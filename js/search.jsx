@@ -40,7 +40,7 @@ class Search extends React.Component {
                             {/* <td><img src={result.image_url} width='100em'/></td> */}
                             <td>
                             <div
-                                onClick={() => this.props.showSelectCallback(result.mal_id)}>
+                                onClick={() => this.props.showSelectCallback(result)}>
                                 <a>{result.title} [{result.type}]</a>
                             </div>
                             </td>

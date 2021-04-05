@@ -12,7 +12,7 @@ class MatchList extends React.Component {
         // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
         Promise.all([
             fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist/completed`),
-            fetch(`https://api.jikan.moe/v3/person/${this.props.vaId}`)
+            fetch(`https://api.jikan.moe/v3/person/${this.props.va.mal_id}`)
         ])
         .then((responses) => {
             return Promise.all(responses.map((response) => {
@@ -45,7 +45,9 @@ class MatchList extends React.Component {
     render() {
         return (
             <div>
-            <a href={`https://myanimelist.net/people/${this.props.vaId}`} target='_blank'>{this.props.vaName}</a>
+            <div>
+                You've heard <a href={`https://myanimelist.net/people/${this.props.va.mal_id}`} target='_blank'>{this.props.va.name}</a> in these shows:
+            </div>
             <table>
             <tbody>
             {
@@ -67,8 +69,7 @@ class MatchList extends React.Component {
 
 MatchList.propTypes = {
     username: PropTypes.string.isRequired,
-    vaId: PropTypes.number.isRequired,
-    vaName: PropTypes.string.isRequired,
+    va: PropTypes.object.isRequired,
 };
 
 export default MatchList;
