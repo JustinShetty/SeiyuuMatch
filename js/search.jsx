@@ -41,7 +41,7 @@ class Search extends React.Component {
                             <td>
                             <div
                                 onClick={() => this.props.showSelectCallback(result.mal_id)}>
-                                <a href="#0">{result.title} [{result.type}]</a>
+                                <a>{result.title} [{result.type}]</a>
                             </div>
                             </td>
                         </tr>

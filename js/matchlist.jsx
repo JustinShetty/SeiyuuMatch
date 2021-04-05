@@ -6,7 +6,6 @@ class MatchList extends React.Component {
         super(props);
         this.state = {results: []};
         this.updateResults = this.updateResults.bind(this);
-        this.mounted = false;
     }
 
     updateResults() {
@@ -36,7 +35,6 @@ class MatchList extends React.Component {
 
     componentDidMount() {
         this.updateResults();
-        this.mounted = true;
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -45,7 +43,6 @@ class MatchList extends React.Component {
     }
 
     render() {
-        if (!this.mounted) return <div/>;
         return (
             <div>
             <a href={`https://myanimelist.net/people/${this.props.vaId}`} target='_blank'>{this.props.vaName}</a>
