@@ -31,14 +31,23 @@ class Search extends React.Component {
                     <input
                         type='text'
                         placeholder='Anime Name'/>
+                    <button type='submit'>Search</button>
                 </form>
-                {this.state.results.map((result) => (
-                    <div
-                        key={result.mal_id}
-                        onClick={() => this.props.showSelectCallback(result.mal_id)}>
-                        <button>{result.title} [{result.type}]</button>
-                    </div>
-                ))}
+                <table>
+                <tbody>
+                    {this.state.results.map((result) => (
+                        <tr key={result.mal_id}>
+                            {/* <td><img src={result.image_url} width='100em'/></td> */}
+                            <td>
+                            <div
+                                onClick={() => this.props.showSelectCallback(result.mal_id)}>
+                                <a href="#0">{result.title} [{result.type}]</a>
+                            </div>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+                </table>
             </div>
         );
     }

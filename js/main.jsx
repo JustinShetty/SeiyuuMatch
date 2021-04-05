@@ -6,18 +6,16 @@ import MatchList from './matchlist';
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {malUsername: '', showId: null, vaId: null};
+        this.state = {malUsername: null, showId: null, vaId: null, vaName: null};
         this.searchSelectCallback = this.searchSelectCallback.bind(this);
         this.vaSelectCallback = this.vaSelectCallback.bind(this);
         this.usernameFieldChangeHandler = this.usernameFieldChangeHandler.bind(this);
 
-        this.searchField = React.createRef();
+        this.usernameField = React.createRef();
     }
 
     componentDidMount(){
-        if (this.searchField !== null) {
-            this.searchField.current.focus();
-        }
+        this.usernameField.current.focus();
     }
 
     usernameFieldChangeHandler(e) {
@@ -25,6 +23,7 @@ class Main extends React.Component {
             malUsername: e.target.value,
             showId: null,
             vaId: null,
+            vaName: null,
         });
     }
 
@@ -32,13 +31,15 @@ class Main extends React.Component {
         this.setState({
             showId: id,
             vaId: null,
+            vaName: null,
         });
     }
 
-    vaSelectCallback(id) {
+    vaSelectCallback(id, name) {
         this.setState({
             vaId: id,
-        })
+            vaName: name,
+        });
     }
 
     render() {
@@ -46,16 +47,16 @@ class Main extends React.Component {
             <div>
                 <input
                     type='text'
-                    ref={this.searchField}
+                    ref={this.usernameField}
                     onChange={this.usernameFieldChangeHandler}
                     placeholder='MyAnimeList Username'/>
                 {
-                    this.state.malUsername !== '' ?
+                    this.state.malUsername !== null && this.state.malUsername !== '' ?
                     <Search showSelectCallback={this.searchSelectCallback}/> :
                     <div/>
                 }
                 {
-                    this.state.showId ?
+                    this.state.showId && !this.state.vaId ?
                     <div>
                         <hr/>
                         <Characters
@@ -69,8 +70,9 @@ class Main extends React.Component {
                     <div>
                         <hr/>
                         <MatchList
+                            username={this.state.malUsername}
                             vaId={this.state.vaId}
-                            username={this.state.malUsername}/>
+                            vaName={this.state.vaName}/>
                     </div> :
                     <div/>
                 }

@@ -10,8 +10,9 @@ class MatchList extends React.Component {
     }
 
     updateResults() {
+        // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
         Promise.all([
-            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist`),
+            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist/completed`),
             fetch(`https://api.jikan.moe/v3/person/${this.props.vaId}`)
         ])
         .then((responses) => {
@@ -23,13 +24,9 @@ class MatchList extends React.Component {
         .then(([user_data, va_data]) => {
             let users_anime = {};
             for (const show of user_data.anime) {
-                // 2 is completed
-                if (show.watching_status === 2) {
-                    users_anime[show.mal_id] = true;
-                }
+                users_anime[show.mal_id] = true;
             }
             let matches = va_data.voice_acting_roles.filter((role) => (role.anime.mal_id in users_anime));
-            console.log(matches);
             this.setState({
                 results: matches,
             });
@@ -43,26 +40,29 @@ class MatchList extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.vaId !== this.props.vaId) {
-            this.updateResults();
-        }
+        if (prevProps.vaId === this.props.vaId) return;
+        this.updateResults();
     }
 
     render() {
         if (!this.mounted) return <div/>;
         return (
             <div>
+            <a href={`https://myanimelist.net/people/${this.props.vaId}`} target='_blank'>{this.props.vaName}</a>
+            <table>
+            <tbody>
             {
-                this.state.results.length ?
-                <div>
-                    {this.state.results.map((match, idx) => (
-                        <div key={idx}>
-                            {match.anime.name}
-                        </div>
-                    ))}
-                </div> :
-                <div>No Matches!</div>
+                this.state.results.map((match, idx) => (
+                    <tr key={idx}>
+                        <td><img src={match.character.image_url} width='100em'/></td>
+                        <td>{match.character.name}</td>
+                        <td><img src={match.anime.image_url} width='100em'/></td>
+                        <td><a href={match.anime.url} target='_blank'>{match.anime.name}</a></td>
+                    </tr>
+                ))
             }
+            </tbody>
+            </table>
             </div>
         );
     }
@@ -71,6 +71,7 @@ class MatchList extends React.Component {
 MatchList.propTypes = {
     username: PropTypes.string.isRequired,
     vaId: PropTypes.number.isRequired,
+    vaName: PropTypes.string.isRequired,
 };
 
 export default MatchList;

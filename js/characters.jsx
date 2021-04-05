@@ -32,9 +32,8 @@ class Characters extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.showId !== this.props.showId) {
-            this.updateResults();
-        }
+        if (prevProps.showId === this.props.showId) return;
+        this.updateResults();
     }
 
     render() {
@@ -45,9 +44,10 @@ class Characters extends React.Component {
                 this.state.results.length !== 0 ?
                 this.state.results.map((result) => (
                     <tr key={result.mal_id}>
+                        <td><img src={result.image_url} width='100em'/></td>
                         <td>{result.name}</td>
                         <td>
-                            <button onClick={() => this.props.vaSelectCallback(result.voice_actors[0].mal_id)}>
+                            <button onClick={() => this.props.vaSelectCallback(result.voice_actors[0].mal_id, result.voice_actors[0].name)}>
                                 {result.voice_actors[0].name}
                             </button>
                         </td>
