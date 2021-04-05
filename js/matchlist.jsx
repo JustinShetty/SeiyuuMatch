@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class MatchList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {results: []};
+        this.state = {results: null};
         this.updateResults = this.updateResults.bind(this);
     }
 
@@ -43,6 +43,7 @@ class MatchList extends React.Component {
     }
 
     render() {
+        if (this.state.results === null) return <div>Loading...</div>;
         return (
             <div>
             <div>
