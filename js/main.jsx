@@ -3,10 +3,12 @@ import Search from './search';
 import Characters from './characters';
 import MatchList from './matchlist';
 
+const defaultUsername = '401_k';
+
 class Main extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {malUsername: null, showId: null, vaId: null, vaName: null};
+        this.state = {malUsername: defaultUsername, showId: null, vaId: null, vaName: null};
         this.searchSelectCallback = this.searchSelectCallback.bind(this);
         this.vaSelectCallback = this.vaSelectCallback.bind(this);
         this.usernameFieldChangeHandler = this.usernameFieldChangeHandler.bind(this);
@@ -49,7 +51,8 @@ class Main extends React.Component {
                     type='text'
                     ref={this.usernameField}
                     onChange={this.usernameFieldChangeHandler}
-                    placeholder='MyAnimeList Username'/>
+                    placeholder='MyAnimeList Username'
+                    defaultValue={defaultUsername}/>
                 {
                     this.state.malUsername !== null && this.state.malUsername !== '' ?
                     <Search showSelectCallback={this.searchSelectCallback}/> :
