@@ -11,7 +11,7 @@ class MatchList extends React.Component {
     updateResults() {
         // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
         Promise.all([
-            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist/completed`),
+            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist`),
             fetch(`https://api.jikan.moe/v3/person/${this.props.va.mal_id}`)
         ])
         .then((responses) => {
@@ -21,8 +21,10 @@ class MatchList extends React.Component {
             }));
         })
         .then(([user_data, va_data]) => {
+            const valid_statuses = [1, 2];
             let users_anime = {};
             for (const show of user_data.anime) {
+                if (!valid_statuses.includes(show.watching_status)) continue;
                 users_anime[show.mal_id] = true;
             }
             let matches = va_data.voice_acting_roles.filter((role) => (role.anime.mal_id in users_anime));
