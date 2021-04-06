@@ -4,6 +4,7 @@
   "main": "/static/js/bundle.js",
   "scripts": {
     "build": "webpack --config ./webpack.config.js --mode production",
+    "postbuild": "cp -r static build/ && cp index.html build/",
     "watch": "webpack --config ./webpack.config.js --mode development --watch"
   },
   "devDependencies": {

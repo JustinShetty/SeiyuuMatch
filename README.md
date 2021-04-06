@@ -6,5 +6,5 @@ After you select a character, SeiyuuMatch cross references that voice actor's ot
 ## Setup
 ```
 npm i
-npm --run-script [build|watch]
+npm run [build|watch]
 ```
