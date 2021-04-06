@@ -90,7 +90,7 @@ class Main extends React.Component {
                         <hr/>
                         <MatchList
                             username={this.state.malUsername}
-                            va={this.state.character.voice_actors[0]}/>
+                            va={this.state.character.voice_actor}/>
                     </div> :
                     <div/>
                 }

@@ -15,13 +15,15 @@ class Characters extends React.Component {
             return response.json();
         })
         .then((data) => {
-            let characters = data.characters
-            characters = characters.filter((ch) => (ch.voice_actors.length > 0))
-            for(let i = 0; i < characters.length; i++) {
-                characters[i].voice_actors = characters[i].voice_actors.filter((va) => (va.language === 'Japanese'))
+            let chs = [];
+            for(let i = 0; i < data.characters.length && chs.length < 50; i++) {
+                let jp_va = data.characters[i].voice_actors.find((va) => (va.language == 'Japanese'));
+                if (!jp_va) continue;
+                data.characters[i].voice_actor = jp_va;
+                chs.push(data.characters[i]);
             }
             this.setState({
-                results: characters
+                results: chs,
             });
         })
         .catch((error) => console.log(error));
@@ -48,7 +50,7 @@ class Characters extends React.Component {
                         <td>{result.name}</td>
                         <td>
                             <button onClick={() => this.props.characterSelectCallback(result)}>
-                                {result.voice_actors[0].name}
+                                {result.voice_actor.name}
                             </button>
                         </td>
                     </tr>
