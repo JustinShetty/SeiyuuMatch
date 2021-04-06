@@ -21,10 +21,9 @@ class MatchList extends React.Component {
             }));
         })
         .then(([user_data, va_data]) => {
-            const valid_statuses = [1, 2];
             let users_anime = {};
             for (const show of user_data.anime) {
-                if (!valid_statuses.includes(show.watching_status)) continue;
+                if (show.watching_status == 6) continue;
                 users_anime[show.mal_id] = true;
             }
             let matches = va_data.voice_acting_roles.filter((role) => (role.anime.mal_id in users_anime));
