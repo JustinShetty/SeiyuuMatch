@@ -26,28 +26,23 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
+            <div className='pure-g'>
+                <form className='pure-u-1 pure-form' onSubmit={this.handleSubmit}>
                     <input
                         type='text'
                         placeholder='Anime Name'/>
-                    <button type='submit'>Search</button>
+                    <button type='submit' className='pure-button pure-button-primary'>Search</button>
                 </form>
-                <table>
-                <tbody>
+                <div className='pure-u-1 pure-g'>
                     {this.state.results.map((result) => (
-                        <tr key={result.mal_id}>
-                            {/* <td><img src={result.image_url} width='100em'/></td> */}
-                            <td>
+                        <div key={result.mal_id} className='pure-u-1'>
                             <div
                                 onClick={() => this.props.showSelectCallback(result)}>
                                 <a>{result.title} [{result.type}]</a>
                             </div>
-                            </td>
-                        </tr>
+                        </div>
                     ))}
-                </tbody>
-                </table>
+                </div>
             </div>
         );
     }

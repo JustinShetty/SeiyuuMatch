@@ -39,25 +39,30 @@ class Characters extends React.Component {
     }
 
     render() {
+        const indexed_classname = (index) => {
+            return index % 2 === 1 ? 'pure-table-odd' : ''
+        };
         return (
-            <table>
-            <tbody>
+            <table className='pure-table'>
             {
-                this.state.results.length !== 0 ?
-                this.state.results.map((result) => (
-                    <tr key={result.mal_id}>
-                        <td><img src={result.image_url} width='100em'/></td>
-                        <td>{result.name}</td>
-                        <td>
-                            <button onClick={() => this.props.characterSelectCallback(result)}>
-                                {result.voice_actor.name}
+                this.state.results.length > 0 ?
+                this.state.results.map((character, index) => (
+                    <tbody key={character.mal_id}>
+                        <tr className={indexed_classname(index)}>
+                            <td rowSpan='2'><img className='pure-img' src={character.image_url}/></td>
+                            <td>{character.name}</td>
+                        </tr>
+                        <tr className={indexed_classname(index)}>
+                            <td>
+                            <button onClick={() => this.props.characterSelectCallback(character)}>
+                                {character.voice_actor.name}
                             </button>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </tbody>
                 )) :
-                <tr><td>No Characters Found!</td></tr>
+                <tbody><tr><td>No Characters Found!</td></tr></tbody>
             }
-            </tbody>
             </table>
         );
     }

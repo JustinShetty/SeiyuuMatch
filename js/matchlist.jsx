@@ -48,9 +48,9 @@ class MatchList extends React.Component {
         return (
             <div>
             <div>
-                You've heard <a href={`https://myanimelist.net/people/${this.props.va.mal_id}`} target='_blank'>{this.props.va.name}</a> in these shows:
+                You've heard <a href={`https://myanimelist.net/people/${this.props.va.mal_id}`} target='_blank'>{this.props.va.name}</a> in these anime:
             </div>
-            <table>
+            <table className='pure-table-striped'>
             <tbody>
             {
                 this.state.results.map((match, idx) => (

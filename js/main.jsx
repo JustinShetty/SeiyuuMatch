@@ -28,17 +28,17 @@ class Main extends React.Component {
 
     render() {
         let selectionInfo = (
-            <div className='row'>
+            <div className='pure-g'>
                 {this.state.show ?
-                <div className='col'>
-                    <img src={this.state.show.image_url}/>
+                <div className='pure-u-1-2'>
+                    <img className='pure-img' src={this.state.show.image_url}/>
                     <div>{this.state.show.title}</div>
                 </div>:
                 <div/>
                 }
                 {this.state.character ?
-                <div className='col'>
-                    <img src={this.state.character.image_url}/>
+                <div className='pure-u-1-2'>
+                    <img className='pure-img' src={this.state.character.image_url}/>
                     <div>{this.state.character.name}</div>
                 </div>:
                 <div/>
@@ -47,24 +47,26 @@ class Main extends React.Component {
         );
         return (
             <div>
+                <form className='pure-form'>
                 <input
                     type='text'
                     ref={this.usernameField}
                     onChange={this.usernameFieldChangeHandler}
                     placeholder='MyAnimeList Username'
                     defaultValue={defaultUsername}/>
+                </form>
                 {
                     this.state.malUsername !== null && this.state.malUsername !== '' ?
-                    <div className='row'>
-                        <div className='col'>
+                    <div className='pure-g'>
+                        <div className='pure-u-1-2'>
                             <Search showSelectCallback={(show) => {
-                                this.setState({
-                                    show: show,
-                                    character: null,
-                                });
-                            }}/>
+                                    this.setState({
+                                        show: show,
+                                        character: null,
+                                    });
+                                }}/>
                         </div>
-                        <div className='col'>
+                        <div className='pure-u-1-2'>
                             {selectionInfo}
                         </div>
                     </div> :
