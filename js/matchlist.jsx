@@ -11,11 +11,12 @@ class MatchList extends React.Component {
     updateResults() {
         // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
         Promise.all([
-            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist`),
-            fetch(`https://api.jikan.moe/v3/person/${this.props.va.mal_id}`)
+            fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist`, {redirect: 'follow'}),
+            fetch(`https://api.jikan.moe/v3/person/${this.props.va.mal_id}`, {redirect: 'follow'})
         ])
         .then((responses) => {
             return Promise.all(responses.map((response) => {
+                // TODO: handle invalid usernames more gracefully
                 if (!response.ok) throw Error(response.statusText);
                 return response.json();
             }));
@@ -39,17 +40,19 @@ class MatchList extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.vaId === this.props.vaId) return;
+        const propsChanged = prevProps.vaId !== this.props.vaId || prevProps.username !== this.props.username;
+        if (!propsChanged) return;
         this.updateResults();
     }
 
     render() {
-        if (this.state.results === null) return <div>Loading...</div>;
         return (
             <div>
             <div>
-                You've heard <a href={`https://myanimelist.net/people/${this.props.va.mal_id}`} target='_blank'>{this.props.va.name}</a> in these anime:
+                {this.props.username} has heard <a href={`https://myanimelist.net/people/${this.props.va.mal_id}`} target='_blank'>{this.props.va.name}</a> in these anime:
             </div>
+            { this.state.results === null ?
+            <div>Loading...</div> :
             <table className='pure-table-striped'>
             <tbody>
             {
@@ -64,6 +67,7 @@ class MatchList extends React.Component {
             }
             </tbody>
             </table>
+            }
             </div>
         );
     }

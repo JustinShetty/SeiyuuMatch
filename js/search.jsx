@@ -5,13 +5,12 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {results: []};
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateResults = this.updateResults.bind(this);
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        const search_term = e.target[0].value;
-        fetch(`https://api.jikan.moe/v3/search/anime?limit=10&q=${search_term}`)
+    updateResults() {
+        if (this.props.searchTerm === '') return;
+        fetch(`https://api.jikan.moe/v3/search/anime?limit=10&q=${this.props.searchTerm}`, {redirect: 'follow'})
         .then((response) => {
             if (!response.ok) throw Error(response.statusText);
             return response.json();
@@ -24,31 +23,36 @@ class Search extends React.Component {
         .catch((error) => console.log(error));
     }
 
+    componentDidMount() {
+        this.updateResults();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.searchTerm === this.props.searchTerm) return;
+        this.updateResults();
+    }
+
     render() {
         return (
-            <div className='pure-g'>
-                <form className='pure-u-1 pure-form' onSubmit={this.handleSubmit}>
-                    <input
-                        type='text'
-                        placeholder='Anime Name'/>
-                    <button type='submit' className='pure-button pure-button-primary'>Search</button>
-                </form>
-                <div className='pure-u-1 pure-g'>
-                    {this.state.results.map((result) => (
-                        <div key={result.mal_id} className='pure-u-1'>
-                            <div
-                                onClick={() => this.props.showSelectCallback(result)}>
-                                <a>{result.title} [{result.type}]</a>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <table className='pure-table'>
+            <tbody>
+                {this.state.results.map((result) => (
+                    <tr key={result.mal_id} className='pure-u-1'>
+                        <td>
+                            <button className='pure-button' onClick={() => this.props.showSelectCallback(result)}>
+                                {result.title} [{result.type}]
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+            </table>
         );
     }
 }
 
 Search.propTypes = {
+    searchTerm: PropTypes.string.isRequired,
     showSelectCallback: PropTypes.func.isRequired,
 };
 

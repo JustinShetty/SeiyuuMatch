@@ -7,8 +7,6 @@ html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     font-family:sans-serif;
 }
-a {
-    text-decoration: underline;
-    color: blue;
-    cursor: pointer;
+.pure-table {
+    border-width: 0;
 }
