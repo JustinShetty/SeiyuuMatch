@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "/static/js/bundle.js",
   "scripts": {
+    "lint": "eslint js/**",
     "build": "webpack --config ./webpack.config.js --mode production",
     "postbuild": "mkdir -p build && cp -r static build/ && cp index.html build/",
     "watch": "webpack --config ./webpack.config.js --mode development --watch"
@@ -13,6 +14,9 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "babel-loader": "^8.2.2",
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.23.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
