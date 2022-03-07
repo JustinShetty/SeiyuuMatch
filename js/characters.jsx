@@ -41,30 +41,24 @@ class Characters extends React.Component {
 
   render() {
     if (this.state.results === null || this.state.results.length < 1) return <div/>;
-    const indexedClassname = (index) => {
-      return index % 2 === 1 ? 'pure-table-odd' : '';
-    };
     return (
-      <table className='pure-table'>
+      <table className='pure-table-striped'>
         {
-                this.state.results.length > 0 ?
-                this.state.results.map((item, index) => (
-                  <tbody key={item.character.mal_id}>
-                    <tr className={indexedClassname(index)}>
-                      <td rowSpan='2'><img className='pure-img'
-                        src={item.character.images.jpg.image_url}/></td>
-                      <td>{item.character.name}</td>
-                    </tr>
-                    <tr className={indexedClassname(index)}>
-                      <td>
-                        <button onClick={() => this.props.characterSelectCallback(item)}>
-                          {item.voice_actor.person.name}
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                )) :
-                <tbody><tr><td>No Characters Found!</td></tr></tbody>
+          this.state.results.length > 0 ?
+          this.state.results.map((item, index) => (
+            <tr key={item.character.mal_id}>
+              <td><img className='pure-img'
+                src={item.character.images.jpg.image_url}/>
+              </td>
+              <td>{item.character.name}</td>
+              <td>
+                <button onClick={() => this.props.characterSelectCallback(item)}>
+                  {item.voice_actor.person.name}
+                </button>
+              </td>
+            </tr>
+          )) :
+          <tr><td>No Characters Found!</td></tr>
         }
       </table>
     );

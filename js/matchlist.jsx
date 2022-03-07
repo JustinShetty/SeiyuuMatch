@@ -67,20 +67,18 @@ class MatchList extends React.Component {
         { this.state.results === null ?
             <div>Loading...</div> :
             <table className='pure-table-striped'>
-              <tbody>
-                {
-                  this.state.results.map((match, idx) => (
-                    <tr key={idx}>
-                      <td><img src={match.character.images.jpg.image_url} width='100em'/></td>
-                      <td>{match.character.name}</td>
-                      <td><img src={match.anime.images.jpg.image_url} width='100em'/></td>
-                      <td><a href={match.anime.url} target='_blank' rel="noreferrer">
-                        {match.anime.title}
-                      </a></td>
-                    </tr>
-                  ))
-                }
-              </tbody>
+              {
+                this.state.results.map((match, idx) => (
+                  <tr key={idx}>
+                    <td><img src={match.character.images.jpg.image_url} width='100em'/></td>
+                    <td>{match.character.name}</td>
+                    <td><img src={match.anime.images.jpg.image_url} width='100em'/></td>
+                    <td><a href={match.anime.url} target='_blank' rel="noreferrer">
+                      {match.anime.title}
+                    </a></td>
+                  </tr>
+                ))
+              }
             </table>
         }
       </div>
