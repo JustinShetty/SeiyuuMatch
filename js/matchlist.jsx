@@ -11,8 +11,10 @@ class MatchList extends React.Component {
   updateResults() {
     // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
     Promise.all([
-      fetch(`https://api.jikan.moe/v3/user/${this.props.username}/animelist`, {redirect: 'follow'}),
-      fetch(`https://api.jikan.moe/v3/person/${this.props.va.mal_id}`, {redirect: 'follow'}),
+      fetch(`https://api.jikan.moe/v4/users/${this.props.username}/animelist`,
+          {redirect: 'follow'}),
+      fetch(`https://api.jikan.moe/v4/people/${this.props.va.mal_id}/voices`,
+          {redirect: 'follow'}),
     ])
         .then((responses) => {
           return Promise.all(responses.map((response) => {
@@ -23,12 +25,12 @@ class MatchList extends React.Component {
         })
         .then(([userData, vaData]) => {
           const usersAnime = {};
-          for (const show of userData.anime) {
-            if (show.watching_status == 6) continue;
-            usersAnime[show.mal_id] = true;
+          for (const item of userData.data) {
+            if (item.watching_status == 6 /* plan to watch */) continue;
+            usersAnime[item.anime.mal_id] = true;
           }
           const matches =
-              vaData.voice_acting_roles.filter((role) => (role.anime.mal_id in usersAnime));
+              vaData.data.filter((role) => (role.anime.mal_id in usersAnime));
           this.setState({
             results: matches,
           });
@@ -41,7 +43,7 @@ class MatchList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const propsChanged = JSON.stringify(prevProps) !== JSON.stringify(this.props.va);
+    const propsChanged = JSON.stringify(prevProps) !== JSON.stringify(this.props);
     if (!propsChanged) return;
     this.updateResults();
   }
@@ -67,11 +69,11 @@ class MatchList extends React.Component {
                 {
                   this.state.results.map((match, idx) => (
                     <tr key={idx}>
-                      <td><img src={match.character.image_url} width='100em'/></td>
+                      <td><img src={match.character.images.jpg.image_url} width='100em'/></td>
                       <td>{match.character.name}</td>
-                      <td><img src={match.anime.image_url} width='100em'/></td>
+                      <td><img src={match.anime.images.jpg.image_url} width='100em'/></td>
                       <td><a href={match.anime.url} target='_blank' rel="noreferrer">
-                        {match.anime.name}
+                        {match.anime.title}
                       </a></td>
                     </tr>
                   ))
