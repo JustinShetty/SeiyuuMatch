@@ -22,7 +22,7 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.usernameField.current.focus();
+    this.searchField.current.focus();
   }
 
   handleSearchSubmit(e) {
