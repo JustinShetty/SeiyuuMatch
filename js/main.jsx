@@ -86,7 +86,7 @@ class Main extends React.Component {
                   <input
                     type='text'
                     ref={this.searchField}
-                    placeholder='JoJo'/>
+                    placeholder='evangelion'/>
                 </div>
                 <div className="pure-control-group">
                   <label htmlFor="aligned-name"></label>
