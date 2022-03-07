@@ -24,7 +24,7 @@ class Search extends React.Component {
               results: json.data,
             });
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.warn(error));
     });
   }
 

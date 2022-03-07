@@ -27,7 +27,7 @@ class Characters extends React.Component {
             results: chs,
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.warn(error));
   }
 
   componentDidMount() {

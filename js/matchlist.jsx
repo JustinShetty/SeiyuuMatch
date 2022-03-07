@@ -35,7 +35,7 @@ class MatchList extends React.Component {
             results: matches,
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.warn(error));
   }
 
   componentDidMount() {
