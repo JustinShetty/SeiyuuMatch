@@ -64,22 +64,37 @@ class MatchList extends React.Component {
         <div>
           {this.props.username} has heard {vaLink} in these anime:
         </div>
-        { this.state.results === null ?
-            <div>Loading...</div> :
-            <table className='pure-table-striped'>
-              {
-                this.state.results.map((match, idx) => (
-                  <tr key={idx}>
-                    <td><img src={match.character.images.jpg.image_url} width='100em'/></td>
-                    <td>{match.character.name}</td>
-                    <td><img src={match.anime.images.jpg.image_url} width='100em'/></td>
-                    <td><a href={match.anime.url} target='_blank' rel="noreferrer">
-                      {match.anime.title}
-                    </a></td>
+        {
+          this.state.results === null ?
+          <div>Loading...</div> :
+          <div className='tile-container'> {
+            this.state.results.map((item, index) => (
+              <table key={index} className='tile'>
+                <tbody>
+                  <tr>
+                    <td>
+                      <img src={item.character.images.jpg.image_url} width='100em'/>
+                    </td>
+                    <td>
+                      <img src={item.anime.images.jpg.image_url} width='100em'/>
+                    </td>
                   </tr>
-                ))
-              }
-            </table>
+                  <tr>
+                    <td colSpan='2'>
+                      {item.character.name}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan='2'>
+                      <a href={item.anime.url} target='_blank' rel="noreferrer">
+                        {item.anime.title}
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ))
+          } </div>
         }
       </div>
     );
