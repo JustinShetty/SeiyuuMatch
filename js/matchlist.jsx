@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const CORS_PROXY = 'https://cors-anywhere.herokuapp.com';
+
 class MatchList extends React.Component {
   constructor(props) {
     super(props);
@@ -9,10 +11,10 @@ class MatchList extends React.Component {
   }
 
   updateResults() {
-    // TODO: Only 300 items are returned per page, if there are more remaining, fetch again
+    // TODO: pagination (with &offset={offset}). only 300 results are returned at a time
     Promise.all([
-      fetch(`https://api.jikan.moe/v4/users/${this.props.username}/animelist`,
-          {redirect: 'follow'}),
+      fetch(`${CORS_PROXY}/https://myanimelist.net/animelist/` +
+            `${this.props.username}/load.json?status=7` /* status=7 means all anime */),
       fetch(`https://api.jikan.moe/v4/people/${this.props.va.mal_id}/voices`,
           {redirect: 'follow'}),
     ])
@@ -25,9 +27,9 @@ class MatchList extends React.Component {
         })
         .then(([userData, vaData]) => {
           const usersAnime = {};
-          for (const item of userData.data) {
-            if (item.watching_status == 6 /* plan to watch */) continue;
-            usersAnime[item.anime.mal_id] = true;
+          for (const item of userData) {
+            if (item.status == 6 /* plan to watch */) continue;
+            usersAnime[item.anime_id] = true;
           }
           const matches =
               vaData.data.filter((role) => (role.anime.mal_id in usersAnime));
