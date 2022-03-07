@@ -6,21 +6,6 @@ import MatchList from './matchlist';
 
 const defaultUsername = '401_k';
 
-const debounce = function(func, wait) {
-  let timeout;
-  return function() {
-    /* eslint-disable */
-    const context = this; const args = arguments;
-    /* eslint-enable */
-    const later = () => {
-      timeout = null;
-      func.apply(context, args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-};
-
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -30,28 +15,30 @@ class Main extends React.Component {
       show: null,
       character: null,
     };
-    this.usernameFieldChangeHandler = this.usernameFieldChangeHandler.bind(this);
     this.usernameField = React.createRef();
-    this.searchTermChangeHandler = this.searchTermChangeHandler.bind(this);
     this.searchField = React.createRef();
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
   }
 
   componentDidMount() {
     this.usernameField.current.focus();
   }
 
-  usernameFieldChangeHandler(e) {
-    if (e.target.value !== '') {
-      this.setState({
-        malUsername: e.target.value,
-      });
+  handleSearchSubmit(e) {
+    e.preventDefault();
+    const username = this.usernameField.current.value;
+    if (username === '') {
+      console.warn('Ignoring search while username is empty');
+      return;
     }
-  }
-
-  searchTermChangeHandler(e) {
-    if (e.target.value.length < 3) return;
+    const searchTerm = this.searchField.current.value;
+    if (searchTerm.length < 3) {
+      console.warn('Ignoring search while anime name is <3 chars');
+      return;
+    }
     this.setState({
-      searchTerm: e.target.value,
+      malUsername: username,
+      searchTerm: searchTerm,
     });
   }
 
@@ -87,7 +74,6 @@ class Main extends React.Component {
                   <input
                     type='text'
                     ref={this.usernameField}
-                    onChange={debounce(this.usernameFieldChangeHandler, 500)}
                     defaultValue={defaultUsername}/>
                 </div>
                 <div className="pure-control-group">
@@ -95,8 +81,11 @@ class Main extends React.Component {
                   <input
                     type='text'
                     ref={this.searchField}
-                    onChange={debounce(this.searchTermChangeHandler, 500)}
                     placeholder='JoJo'/>
+                </div>
+                <div className="pure-control-group">
+                  <label htmlFor="aligned-name"></label>
+                  <button>Search</button>
                 </div>
               </fieldset>
             </form>
@@ -131,7 +120,7 @@ class Main extends React.Component {
                       <hr/>
                       <MatchList
                         username={this.state.malUsername}
-                        va={this.state.character.voice_actor}/>
+                        va={this.state.character.voice_actor.person}/>
                     </div> :
                     <div/>
         }
