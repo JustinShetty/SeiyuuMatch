@@ -46,18 +46,22 @@ class Characters extends React.Component {
         {
           this.state.results.map((item) => (
             <div key={item.character.mal_id} className='tile'>
-              <table>
+              <table><tbody>
                 <tr>
-                  <img className='pure-img'
-                   src={item.character.images.jpg.image_url}/>
+                  <td>
+                    <img className='pure-img'
+                    src={item.character.images.jpg.image_url}/>
+                  </td>
                 </tr>
-                <tr>{item.character.name}</tr>
+                <tr><td>{item.character.name}</td></tr>
                 <tr>
-                  <button onClick={() => this.props.characterSelectCallback(item)}>
-                    {item.voice_actor.person.name}
-                  </button>
+                  <td>
+                    <button onClick={() => this.props.characterSelectCallback(item)}>
+                      {item.voice_actor.person.name}
+                    </button>
+                  </td>
                 </tr>
-              </table>
+              </tbody></table>
             </div>
           ))
         }
