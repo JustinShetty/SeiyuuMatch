@@ -10,3 +10,15 @@ html, button, input, select, textarea,
 .pure-table {
     border-width: 0;
 }
+.pure-table-striped {
+    border-width: 0;
+}
+.tile-container {
+    padding: 1%;
+}
+.tile {
+    margin: 1%;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(240, 240, 240);
+}

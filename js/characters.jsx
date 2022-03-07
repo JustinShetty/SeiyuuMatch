@@ -42,25 +42,26 @@ class Characters extends React.Component {
   render() {
     if (this.state.results === null || this.state.results.length < 1) return <div/>;
     return (
-      <table className='pure-table-striped'>
+      <div className='tile-container'>
         {
-          this.state.results.length > 0 ?
-          this.state.results.map((item, index) => (
-            <tr key={item.character.mal_id}>
-              <td><img className='pure-img'
-                src={item.character.images.jpg.image_url}/>
-              </td>
-              <td>{item.character.name}</td>
-              <td>
-                <button onClick={() => this.props.characterSelectCallback(item)}>
-                  {item.voice_actor.person.name}
-                </button>
-              </td>
-            </tr>
-          )) :
-          <tr><td>No Characters Found!</td></tr>
+          this.state.results.map((item) => (
+            <div key={item.character.mal_id} className='tile'>
+              <table>
+                <tr>
+                  <img className='pure-img'
+                   src={item.character.images.jpg.image_url}/>
+                </tr>
+                <tr>{item.character.name}</tr>
+                <tr>
+                  <button onClick={() => this.props.characterSelectCallback(item)}>
+                    {item.voice_actor.person.name}
+                  </button>
+                </tr>
+              </table>
+            </div>
+          ))
         }
-      </table>
+      </div>
     );
   }
 }
