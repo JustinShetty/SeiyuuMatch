@@ -4,6 +4,7 @@ import Search from './search';
 import Characters from './characters';
 import MatchList from './matchlist';
 
+const repoLink = 'https://github.com/JustinShetty/SeiyuuMatch';
 const defaultUsername = '401_k';
 
 class Main extends React.Component {
@@ -56,7 +57,8 @@ class Main extends React.Component {
         }
         {this.state.character ?
                 <div className='pure-u-1-2'>
-                  <img className='pure-img' src={this.state.character.character.images.jpg.image_url}/>
+                  <img className='pure-img'
+                    src={this.state.character.character.images.jpg.image_url}/>
                   <div>{this.state.character.character.name}</div>
                 </div>:
                 <div/>
@@ -66,6 +68,9 @@ class Main extends React.Component {
     return (
       <div>
         <div className='pure-g'>
+          <div className='pure-u-1-1'>
+            <a href={repoLink} target='_blank' rel="noreferrer">{repoLink}</a>
+          </div>
           <div className='pure-u-1-2'>
             <form className="pure-form pure-form-aligned" onSubmit={this.handleSearchSubmit}>
               <fieldset>
