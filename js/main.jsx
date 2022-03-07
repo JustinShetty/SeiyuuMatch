@@ -48,7 +48,7 @@ class Main extends React.Component {
         {this.state.show ?
                 <div className='pure-u-1-2'>
                   <a href={this.state.show.url} target='_blank' rel="noreferrer">
-                    <img className='pure-img' src={this.state.show.image_url}/>
+                    <img className='pure-img' src={this.state.show.images.jpg.image_url}/>
                   </a>
                   <div>{this.state.show.title}</div>
                 </div>:
@@ -56,8 +56,8 @@ class Main extends React.Component {
         }
         {this.state.character ?
                 <div className='pure-u-1-2'>
-                  <img className='pure-img' src={this.state.character.image_url}/>
-                  <div>{this.state.character.name}</div>
+                  <img className='pure-img' src={this.state.character.character.images.jpg.image_url}/>
+                  <div>{this.state.character.character.name}</div>
                 </div>:
                 <div/>
         }
