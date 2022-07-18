@@ -1,1 +1,0 @@
-from seiyuu_match.api.mal_proxy import mal_proxy

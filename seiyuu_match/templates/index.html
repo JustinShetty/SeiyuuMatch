@@ -2,14 +2,13 @@
 <html lang="en">
     <head>
         <title>SeiyuuMatch</title>
-        <!-- stop favicon 404 -->
-        <link rel="icon" href="data:;base64,iVBORwOKGO=" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="static/css/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <div id="reactMain">Loading React Main...</div>
-        <script type="text/javascript" src="static/js/bundle.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bundle.js') }}"></script>
     </body>
 </html>

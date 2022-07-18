@@ -1,0 +1,1 @@
+from seiyuu_match.views.index import index

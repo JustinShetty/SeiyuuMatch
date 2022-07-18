@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {malRouteToUrl} from './proxy';
 
 class Search extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Search extends React.Component {
     this.setState({
       results: null,
     }, () => {
-      fetch(`https://api.jikan.moe/v4/anime?limit=10&q=${this.props.searchTerm}`,
+      fetch(malRouteToUrl(`anime?limit=10&q=${this.props.searchTerm}`),
           {redirect: 'follow'})
           .then((response) => {
             if (!response.ok) throw Error(response.statusText);
@@ -45,12 +46,12 @@ class Search extends React.Component {
       <table className='pure-table'>
         <tbody>
           {this.state.results.map((result) => (
-            <tr key={result.mal_id} className='pure-u-1'>
+            <tr key={result.node.id} className='pure-u-1'>
               <td>
                 <button
                   className='pure-button'
                   onClick={() => this.props.showSelectCallback(result)}>
-                  {result.title} [{result.type}]
+                  {result.node.title}
                 </button>
               </td>
             </tr>
