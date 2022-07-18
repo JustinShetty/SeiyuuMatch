@@ -1,3 +1,4 @@
 venv/
 node_modules/
 seiyuu_match/static/js/
+**/__pycache__
