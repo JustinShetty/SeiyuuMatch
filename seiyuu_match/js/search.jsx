@@ -14,15 +14,15 @@ class Search extends React.Component {
     this.setState({
       results: null,
     }, () => {
-      fetch(malRouteToUrl(`anime?limit=10&q=${this.props.searchTerm}`),
-          {redirect: 'follow'})
+      fetch(malRouteToUrl(`anime?limit=10&q=${this.props.searchTerm}`))
           .then((response) => {
             if (!response.ok) throw Error(response.statusText);
             return response.json();
           })
           .then((json) => {
+            const mapped = json.data.map((item) => item.node);
             this.setState({
-              results: json.data,
+              results: mapped,
             });
           })
           .catch((error) => console.warn(error));
@@ -46,12 +46,12 @@ class Search extends React.Component {
       <table className='pure-table'>
         <tbody>
           {this.state.results.map((result) => (
-            <tr key={result.node.id} className='pure-u-1'>
+            <tr key={result.id} className='pure-u-1'>
               <td>
                 <button
                   className='pure-button'
-                  onClick={() => this.props.showSelectCallback(result)}>
-                  {result.node.title}
+                  onClick={() => this.props.animeSelectCallback(result)}>
+                  {result.title}
                 </button>
               </td>
             </tr>
@@ -64,7 +64,7 @@ class Search extends React.Component {
 
 Search.propTypes = {
   searchTerm: PropTypes.string.isRequired,
-  showSelectCallback: PropTypes.func.isRequired,
+  animeSelectCallback: PropTypes.func.isRequired,
 };
 
 export default Search;

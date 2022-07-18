@@ -9,7 +9,8 @@ class Characters extends React.Component {
   }
 
   updateResults() {
-    fetch(`https://api.jikan.moe/v4/anime/${this.props.showId}/characters`)
+    // TODO replace this with the official API some day
+    fetch(`https://api.jikan.moe/v4/anime/${this.props.animeId}/characters`)
         .then((response) => {
           if (!response.ok) throw Error(response.statusText);
           return response.json();
@@ -35,7 +36,7 @@ class Characters extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.showId === this.props.showId) return;
+    if (prevProps.animeId === this.props.animeId) return;
     this.updateResults();
   }
 
@@ -73,7 +74,7 @@ class Characters extends React.Component {
 }
 
 Characters.propTypes = {
-  showId: PropTypes.number.isRequired,
+  animeId: PropTypes.number.isRequired,
   characterSelectCallback: PropTypes.func.isRequired,
 };
 

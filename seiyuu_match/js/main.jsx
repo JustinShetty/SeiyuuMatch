@@ -94,9 +94,9 @@ class Main extends React.Component {
                 </div>
               </fieldset>
             </form>
-            <Search searchTerm={this.state.searchTerm} showSelectCallback={(show) => {
+            <Search searchTerm={this.state.searchTerm} animeSelectCallback={(anime) => {
               this.setState({
-                show: show,
+                anime: anime,
                 character: null,
               });
             }}/>
@@ -106,11 +106,11 @@ class Main extends React.Component {
           </div>
         </div>
         {
-                    this.state.show && !this.state.character ?
+                    this.state.anime && !this.state.character ?
                     <div>
                       <hr/>
                       <Characters
-                        showId={this.state.show.mal_id}
+                        animeId={this.state.anime.id}
                         characterSelectCallback={(character) => {
                           this.setState({
                             character: character,

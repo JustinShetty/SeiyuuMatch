@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com';
+import {malRouteToUrl} from './proxy';
 
 class MatchList extends React.Component {
   constructor(props) {
@@ -11,12 +10,13 @@ class MatchList extends React.Component {
   }
 
   updateResults() {
-    // TODO: pagination (with &offset={offset}). only 300 results are returned at a time
+    // TODO: pagination
+    const baseUserQuery = malRouteToUrl(`users/${this.props.username}/animelist?limit=1000`);
     Promise.all([
-      fetch(`${CORS_PROXY}/https://myanimelist.net/animelist/` +
-            `${this.props.username}/load.json?status=7` /* status=7 means all anime */),
-      fetch(`https://api.jikan.moe/v4/people/${this.props.va.mal_id}/voices`,
-          {redirect: 'follow'}),
+      fetch(baseUserQuery + '&status=watching'),
+      fetch(baseUserQuery + '&status=completed'),
+      // TODO: replace with official API someday
+      fetch(`https://api.jikan.moe/v4/people/${this.props.va.mal_id}/voices`),
     ])
         .then((responses) => {
           return Promise.all(responses.map((response) => {
@@ -25,14 +25,15 @@ class MatchList extends React.Component {
             return response.json();
           }));
         })
-        .then(([userData, vaData]) => {
-          const usersAnime = {};
-          for (const item of userData) {
-            if (item.status == 6 /* plan to watch */) continue;
-            usersAnime[item.anime_id] = true;
+        .then(([watchingData, completedData, vaData]) => {
+          let animeList = watchingData.data.map((item) => item.node);
+          animeList = animeList.concat(completedData.data.map((item) => item.node));
+          const seenIds = new Set();
+          for (const anime of animeList) {
+            seenIds.add(anime.id);
           }
           const matches =
-              vaData.data.filter((role) => (role.anime.mal_id in usersAnime));
+              vaData.data.filter((role) => ( seenIds.has(role.anime.mal_id)));
           this.setState({
             results: matches,
           });
