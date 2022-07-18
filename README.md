@@ -5,6 +5,10 @@ After you select a character, SeiyuuMatch cross references that voice actor's ot
 
 ## Setup
 ```
-npm install
-npm run [build|watch]
+> npm install
+> npm run build
+> python3 -m venv venv
+> source venv/bin/activate
+> (venv) pip install -r requirements.txt
+> (venv) FLASK_APP=seiyuu_match flask run
 ```
