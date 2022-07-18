@@ -1,9 +1,9 @@
 {
   "name": "seiyuumatch",
   "version": "1.0.0",
-  "main": "/static/js/bundle.js",
+  "main": "/seiyuu_match/static/js/bundle.js",
   "scripts": {
-    "lint": "eslint js/**",
+    "lint": "eslint seiyuu_match/js/**",
     "build": "webpack --config ./webpack.config.js --mode production",
     "watch": "webpack --config ./webpack.config.js --mode development --watch"
   },
