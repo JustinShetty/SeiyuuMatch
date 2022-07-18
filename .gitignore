@@ -1,4 +1,3 @@
 node_modules/
-static/js/
-build/
+seiyuu_match/static/js/
 venv/

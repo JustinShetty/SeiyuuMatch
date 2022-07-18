@@ -1,9 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  entry: './js/main.jsx',
+  entry: './seiyuu_match/js/main.jsx',
   output: {
-    path: path.join(__dirname, '/static/js/'),
+    path: path.join(__dirname, '/seiyuu_match/static/js/'),
     filename: 'bundle.js',
   },
   module: {

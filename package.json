@@ -5,7 +5,6 @@
   "scripts": {
     "lint": "eslint js/**",
     "build": "webpack --config ./webpack.config.js --mode production",
-    "postbuild": "mkdir -p build && cp -r static build/ && cp index.html build/",
     "watch": "webpack --config ./webpack.config.js --mode development --watch"
   },
   "devDependencies": {
