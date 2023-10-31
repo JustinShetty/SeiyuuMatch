@@ -3,15 +3,23 @@ When setting the primary font stack, apply it to the Pure grid units along
 with "html", "button", "input", "select", and "textarea". Pure Grids use
 specific font stacks to ensure the greatest OS/browser compatibility.
 */
+body {
+    padding: 2%;
+}
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     font-family:sans-serif;
 }
 .pure-table {
-    border-width: 0;
+    /* border-width: 0 0 0 0; */
+    border: none;
+}
+.pure-table td {
+    border: none;
 }
 .pure-table-striped {
-    border-width: 0;
+    border: none;
+    /* border-width: 0 0 0 0; */
 }
 .tile-container {
     padding: 1%;
